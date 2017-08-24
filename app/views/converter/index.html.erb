@@ -1,0 +1,5 @@
+<h3>Import</h3>
+<%= form_tag import_converter_index_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Upload File", class: 'btn btn-default' %>
+<% end %>
