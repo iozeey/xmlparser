@@ -13,7 +13,7 @@ class Converter < ApplicationRecord
     CSV.foreach(file.path, headers: false) do |r|
       if r[0]
         if is_question
-          question  = " #{r[0]} #{r[1]} #{r[2]} #{r[3]} "
+          question  = " #{r[0]}"
           is_question = false
           # now turn for answers
           is_answer_reached = true
@@ -29,7 +29,7 @@ class Converter < ApplicationRecord
           answers = []
         elsif !is_question && is_answer_reached
           option = "#{r[0]}"
-          text = "#{r[1]} #{r[2]} #{r[3]} #{r[4]}"
+          text = "#{r[1]}"
           temp = {option: option , text: text}
           answers.push temp
         end
