@@ -21,7 +21,8 @@ xml.quiz do
           end
         end
       end
-      xml.actualanswer question[:answer]
+      xml.shuffleanswers 0
+      xml.answernumbering 123
     end
   end
 end

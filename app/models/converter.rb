@@ -8,28 +8,42 @@ class Converter < ApplicationRecord
       question = nil
     
       is_question = true
-      is_answer_reached = false
+      can_parse_answers = false
       
     CSV.foreach(file.path, headers: false) do |r|
       if r[0]
+        temp_answer = nil
+
         if is_question
+
           question  = " #{r[0]}"
           is_question = false
-          # now turn for answers
-          is_answer_reached = true
-        elsif r[0] == "answer:" || r[0] == "ANSWER:"
-          is_answer_reached = false
-          ans = "#{r[1]}"
-          tempa = {question: question , answers: answers, answer: ans}
+
+          # now turn for answers parsing
+          can_parse_answers = true
+        elsif r[0] && r[0].downcase == "answer:"
+
+          can_parse_answers = false
+          temp_answer = "#{r[1]}"
+          tempa = {question: question , answers: answers, answer: temp_answer}
           questions.push tempa
 
           is_question = true
 
+          answers.each do |answer|
+            if answer[:option] == temp_answer
+              answer[:option] = temp_answer
+            else
+              answer[:option] = 0
+            end 
+          end
           # empty the answers 
           answers = []
-        elsif !is_question && is_answer_reached
-          option = "#{r[0]}"
+        elsif !is_question && can_parse_answers
+          
+          option = "#{r[0]}".chomp(".")
           text = "#{r[1]}"
+
           temp = {option: option , text: text}
           answers.push temp
         end
