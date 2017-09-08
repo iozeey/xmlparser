@@ -25,14 +25,18 @@ class Converter < ApplicationRecord
 
           can_parse_answers = false
           temp_answer = "#{r[1]}"
-          tempa = {question: question , answers: answers, answer: temp_answer}
+
+          # single: is hard coded for now
+
+          tempa = {question: question , answers: answers, answer: temp_answer, single: true }
+
           questions.push tempa
 
           is_question = true
 
           answers.each do |answer|
             if answer[:option] == temp_answer
-              answer[:option] = temp_answer
+              answer[:option] = "100.000"
             else
               answer[:option] = 0
             end 
@@ -76,7 +80,9 @@ class Converter < ApplicationRecord
 
         temp_answer = data[1].squish
 
-        tempa = {question: question , answers: answers, answer: temp_answer}
+        # single: is hard coded for now
+
+        tempa = {question: question , answers: answers, answer: temp_answer, single: true }
 
         questions.push tempa
 
@@ -84,7 +90,7 @@ class Converter < ApplicationRecord
  
         answers.each do |answer|
           if answer[:option] == temp_answer
-            answer[:option] = temp_answer
+            answer[:option] = "100.000"
           else
             answer[:option] = 0
           end 

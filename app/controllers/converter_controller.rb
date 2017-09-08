@@ -19,6 +19,6 @@ class ConverterController < ApplicationController
     
     @quize = Converter.importText(params[:file]) if [".txt"].include? File.extname(params[:file].original_filename)
 
-    render :template => "converter/index.xml", :type => :builder
+    render :template => "converter/show.xml", :type => :builder
   end
 end
