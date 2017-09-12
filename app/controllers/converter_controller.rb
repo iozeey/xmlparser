@@ -19,6 +19,12 @@ class ConverterController < ApplicationController
     
     @quize = Converter.importText(params[:file]) if [".txt"].include? File.extname(params[:file].original_filename)
 
-    render :template => "converter/show.xml", :type => :builder
+    # render :template => "converter/show.xml", :type => :builder
+    
+    file = params[:file].original_filename
+    file_name = File.basename(file,File.extname(file))
+
+    stream = render_to_string(:template=>"converter/show.xml" )  
+    send_data(stream, :type=>"text/xml",:filename => "#{file_name}.xml")
   end
 end
