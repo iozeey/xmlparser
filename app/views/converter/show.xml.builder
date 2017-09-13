@@ -11,17 +11,20 @@ xml.quiz do
     questions.each do |question|
       xml.question(type: "multichoice") do
         xml.name do
-          xml.text 
+          xml.text do
             xml.cdata! question[:question]
+          end
         end
         xml.questiontext(format: "html") do
-          xml.text 
+          xml.text do
             xml.cdata! question[:question]
+          end
         end
         question[:answers].each do |answer|
           xml.answer(fraction: answer[:option]) do
-            xml.text 
+            xml.text do
               xml.cdata! answer[:text]
+            end
           end
         end
         xml.shuffleanswers 0
